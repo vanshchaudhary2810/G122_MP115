@@ -1,0 +1,62 @@
+# MP115 findings --- fill in every value, keep every key.
+# The marking tool reads this file. Write null only where the comment says so.
+# Use the exact column names and group values from your data files.
+
+group_id: "G122"          # your group id, e.g. "G042"
+problem_id: "MP115"
+
+data_issues:
+  # For each of the 7 kinds: present: true or false.
+  # If present is false, leave the other values as null.
+  leaking_column:
+    present: false
+    column: null           # the column that must not be used as a feature
+  unit_mixup:
+    present: true
+    column: plate_size_cm  # the column recorded in a different unit
+    group_value: "Boys Hostel 1"  # the value of hostel whose rows are affected
+    factor: 10           # wrong value = right value x factor
+  sentinel_value:
+    present: false
+    column: null
+    value: null            # the special number typed instead of a blank
+    count: null            # how many rows have it
+  duplicate_rows:
+    present: true
+    count: 60              # number of EXTRA copies (rows you would delete)
+  stuck_sensor:
+    present: true
+    column: attendance_pct
+    start_date: "2026-03-02"  # first date with the stuck value, YYYY-MM-DD
+    end_date: "2026-03-18"         # last date with the stuck value, YYYY-MM-DD
+  target_typos:
+    present: true
+    count: 15              # rows whose target was typed 10 times too big
+  spelling_variants:
+    present: false
+    column: null
+    true_levels: null      # how many real categories there are after cleaning
+
+tracking:
+  experiment_name: G122_MP115_mess_waste
+  best_run_id: 930d4f183c4b4febb120f30fb946fc3d  # the MLflow run id of your v1 model
+  registered_model_name: mp115_waste_model
+  champion_version: 1
+
+monitoring:
+  psi:                     # cleaned train.csv vs later.csv, 10 bins
+    students_registered: null
+    attendance_pct: null
+    menu_rating: null
+    temp_c: null
+    cooked_kg: null
+    plate_size_cm: null
+  most_drifted_feature: null
+  mae_by_group:            # v1 on later.csv, per value of hostel
+    'Boys Hostel 1': null
+    'Boys Hostel 2': null
+    'Girls Hostel': null
+  worst_served_group: null
+  mae_v1_on_check: null    # v1 on the last 30% of later.csv (by date)
+  mae_v2_on_check: null    # v2 on the same rows
+  decision: null           # promote or keep

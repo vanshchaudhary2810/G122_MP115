@@ -1,0 +1,24 @@
+data:
+  train: data/raw/train.csv
+  later: data/raw/later.csv
+  holdout: data/raw/holdout_features.csv
+target: waste_kg
+numeric: [students_registered, attendance_pct, menu_rating, temp_c, cooked_kg, plate_size_cm]
+categorical: [meal, hostel]
+cleaning:
+  unit_column: plate_size_cm
+  unit_group: Boys Hostel 1
+  unit_factor: 10
+  target_typo_threshold: 100
+  stuck_column: attendance_pct
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: G122_MP115_mess_waste
+  registered_model_name: mp115_waste_model
+  test_size: 0.2
+  random_state: 42
+  runs:
+    - {model: ridge, alpha: 1.0}
+    - {model: random_forest, n_estimators: 200, max_depth: 8}
+    - {model: random_forest, n_estimators: 300, max_depth: null}
+    - {model: gradient_boosting, n_estimators: 300, learning_rate: 0.05, max_depth: 3}
