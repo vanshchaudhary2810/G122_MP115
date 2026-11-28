@@ -22,3 +22,11 @@ mlflow:
     - {model: random_forest, n_estimators: 200, max_depth: 8}
     - {model: random_forest, n_estimators: 300, max_depth: null}
     - {model: gradient_boosting, n_estimators: 300, learning_rate: 0.05, max_depth: 3}
+monitoring:
+  psi_bins: 10
+  retrain_fraction: 0.7
+  promote_if_better_by: 0.05
+  report: reports/monitoring.json
+predict:
+  model_path: models/model.joblib
+  output: predictions/holdout_predictions.csv
