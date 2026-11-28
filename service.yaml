@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mp115-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: mp115-api
+  ports:
+    - port: 80
+      targetPort: 8000
+      protocol: TCP
